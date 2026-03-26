@@ -1,4 +1,4 @@
-export const products = [
+export let products = [
   {
     id: 1,
     name: "Trà Ô Long Đặc Sản",
@@ -44,3 +44,6 @@ export const products = [
       "https://lh3.googleusercontent.com/aida-public/AB6AXuB2y0B6-UENXBmC-XtQbAhLsiYkn5xqrIXUUjxkVj2tQni22ff4ZrIftfsnOfOc6OPUnbS5MsjAKVvDVZLfLNfVLxXgsJJhhm1Hl6CNxfTiDavLRdXf1fhUuxZdNZGQ9foODqXWSeeSHRl6iUfyEE4OrKNwmFScsUmjoZb1xmrGya_qngSmKtqH77I13kVOn8FnUnkTmuuifOMbmdsb6om2Lq42vMPh5wtgtT2BDD0fg62yVXd9HnJb1Z2yrlge_2Qls4HsLHoMAgQ",
   },
 ];
+export function addProduct(product) {
+  products.push(product);
+}

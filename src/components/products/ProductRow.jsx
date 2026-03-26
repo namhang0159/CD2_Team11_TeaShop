@@ -1,5 +1,7 @@
 "use client";
+
 import React, { useState } from "react";
+import Link from "next/link";
 import Image from "next/image";
 import { products } from "@/data/products"; // file chứa data sản phẩm
 
@@ -11,19 +13,28 @@ function ProductRow({ product }) {
   };
 
   return (
-    <tr className="hover:bg-green-50 transition-colors">
+    <tr
+  className="hover:bg-green-50 transition-colors cursor-pointer"
+  onClick={() => window.location.href = `/products/${product.id}`}
+>
       <td className="px-6 py-4 flex items-center gap-3">
-        <div className="w-12 h-12 rounded-lg overflow-hidden border border-gray-200">
-          <Image
-            width={40}
-            height={40}
-            src={product.image}
-            alt={product.name}
-            className="w-full h-full object-cover"
-          />
-        </div>
+     <Link href={`/products/${product.id}`}>
+  <div className="w-12 h-12 rounded-lg overflow-hidden border border-gray-200">
+    <Image
+      width={40}
+      height={40}
+      src={product.image}
+      alt={product.name}
+      className="w-full h-full object-cover"
+    />
+  </div>
+</Link>
         <div className="flex flex-col">
-          <span className="font-bold text-black">{product.name}</span>
+          <Link href={`/products/${product.id}`}>
+  <span className="font-bold text-black hover:text-green-600">
+    {product.name}
+  </span>
+</Link>
           <span className="text-xs text-gray-500 font-mono">
             SKU: {product.sku}
           </span>
@@ -59,12 +70,12 @@ function ProductRow({ product }) {
       <td className="px-6 py-4 flex justify-center gap-2">
         <button className="p-1.5 rounded-lg hover:bg-green-600 hover:text-white text-gray-400">
           <span className="material-symbols-outlined text-sm">
-            <i class="fa fa-edit" aria-hidden="true"></i>
+            <i  className="fa fa-trash" aria-hidden="true"></i>
           </span>
         </button>
         <button className="p-1.5 rounded-lg hover:bg-red-500 hover:text-white text-gray-400">
           <span className="material-symbols-outlined text-sm">
-            <i class="fa fa-trash" aria-hidden="true"></i>
+            <i className="fa fa-trash" aria-hidden="true"></i>
           </span>
         </button>
       </td>
@@ -77,7 +88,7 @@ export default function ProductTable() {
   const [categoryFilter, setCategoryFilter] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
 
-  const filteredProducts = products.filter(
+  const filteredProducts = [...products].filter(
     (p) =>
       // lọc theo search
       (p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -92,9 +103,9 @@ export default function ProductTable() {
     <div className="bg-white rounded-xl shadow overflow-hidden p-4 flex flex-col gap-4">
       {/* Filters */}
       <div className="flex flex-wrap gap-3 items-center">
-        <div className="flex-1 min-w-[250px] relative">
+        <div className="flex-1 min-w-62.5 relative">
           <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
-            <i class="fa fa-search" aria-hidden="true"></i>
+            <i className="fa fa-search" aria-hidden="true"></i>
           </span>
           <input
             type="text"

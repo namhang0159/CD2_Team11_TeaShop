@@ -64,7 +64,7 @@ export default function Sidebar() {
 
           <button className="ml-auto text-slate-400 hover:text-red-500">
             <span className="material-symbols-outlined text-sm">
-              <i class="fa fa-sign-out" aria-hidden="true"></i>
+              <i className="fa fa-sign-out" aria-hidden="true"></i>
             </span>
           </button>
         </div>

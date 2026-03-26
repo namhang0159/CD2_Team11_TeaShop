@@ -1,6 +1,7 @@
 "use client";
 
 import ProductTable from "@/components/products/ProductRow";
+import Link from "next/link";
 
 export default function ProductPage() {
   return (
@@ -12,13 +13,16 @@ export default function ProductPage() {
             Quản lý kho hàng và thông tin sản phẩm.
           </p>
         </div>
-        <button className="bg-green-600 text-white px-6 py-2.5 rounded-lg font-bold flex items-center gap-2 hover:bg-green-700">
-          <span className="material-symbols-outlined">
-            <i class="fa fa-plus" aria-hidden="true"></i>
-          </span>{" "}
+
+        <Link
+          href="/products/add"
+          className="bg-green-600 text-white px-6 py-2.5 rounded-lg font-bold flex items-center gap-2 hover:bg-green-700"
+        >
           Thêm sản phẩm mới
-        </button>
+        </Link>
+
       </div>
+
       <ProductTable />
     </div>
   );

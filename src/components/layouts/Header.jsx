@@ -3,7 +3,7 @@ export default function Header() {
     <header className="bg-white dark:bg-background-dark border-b border-green-600/10 px-8 py-4 flex items-center justify-between sticky top-0 z-10">
       <div className="flex items-center gap-4">
         <span className="material-symbols-outlined text-green-600">
-          <i class="fa fa-address-book" aria-hidden="true"></i>
+          <i className="fa fa-address-book" aria-hidden="true"></i>
         </span>
 
         <h2 className="text-xl font-bold text-black">Tea Shop Management</h2>
@@ -13,7 +13,7 @@ export default function Header() {
         {/* Search */}
         <div className="relative">
           <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm">
-            <i class="fa fa-search" aria-hidden="true"></i>
+            <i className="fa fa-search" aria-hidden="true"></i>
           </span>
 
           <input
@@ -27,7 +27,7 @@ export default function Header() {
         <div className="flex items-center gap-2">
           <button className="p-2 rounded-lg bg-green-600/10 text-green-600 hover:bg-green-600/20 relative">
             <span className="material-symbols-outlined">
-              <i class="fa fa-bell" aria-hidden="true"></i>
+              <i className="fa fa-bell" aria-hidden="true"></i>
             </span>
 
             <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full border-2 border-white"></span>
