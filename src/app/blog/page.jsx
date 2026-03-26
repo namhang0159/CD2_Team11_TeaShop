@@ -1,5 +1,5 @@
 "use client";
-
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { getBlogs } from "@/util/api";
 
@@ -59,21 +59,20 @@ export default function BlogPage() {
 
       <div className="flex justify-between mb-6">
 
-        <div>
-          <h1 className="text-4xl font-bold">
-            Quản lý bài viết
-          </h1>
+  <div>
+    <h1 className="text-4xl font-bold">
+      Quản lý bài viết
+    </h1>
+  </div>
 
-          <p className="text-gray-600">
-            Quản lý nội dung blog
-          </p>
-        </div>
+  <Link
+    href="/blog/create"
+    className="bg-green-600 text-white px-5 py-2 rounded-lg"
+  >
+    + Viết bài mới
+  </Link>
 
-        <button className="bg-green-600 text-white px-5 py-2 rounded-lg">
-          + Viết bài mới
-        </button>
-
-      </div>
+</div>
 
       {/* STATS */}
 

@@ -30,3 +30,4 @@ export const blogs = [
     image: "/tea3.jpg",
   },
 ];
+

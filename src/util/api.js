@@ -116,3 +116,19 @@ export const getBlogs = async () => {
     }, 200);
   });
 };
+
+
+
+
+
+import { blogCategories } from "@/data/blog-categories";
+import { blogStatus } from "@/data/blog-status";
+
+
+
+
+export const getCategories = async () =>
+  blogCategories;
+
+export const getStatus = async () =>
+  blogStatus;
