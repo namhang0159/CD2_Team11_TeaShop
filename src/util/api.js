@@ -106,3 +106,13 @@ export const getOrders = async () => {
     }, 300);
   });
 };
+
+import { blogs } from "@/data/blogs";
+
+export const getBlogs = async () => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(blogs);
+    }, 200);
+  });
+};
