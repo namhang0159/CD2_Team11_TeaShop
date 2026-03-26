@@ -97,3 +97,12 @@ export async function getRecentOrders() {
     },
   ];
 }
+import { orders } from "@/data/orders";
+
+export const getOrders = async () => {
+  return new Promise((res) => {
+    setTimeout(() => {
+      res(orders);
+    }, 300);
+  });
+};

@@ -1,7 +1,19 @@
-import React from "react";
+import OrdersFilter from "@/components/orders/OrdersFilter";
+import OrdersTable from "@/components/orders/OrdersTable";
+import OrdersStats from "@/components/orders/OrdersStats";
 
-const OrderPage = () => {
-  return <div>OrderPage</div>;
-};
+import { orders } from "@/data/orders";
 
-export default OrderPage;
+export default function Page() {
+  return (
+    <div className="space-y-6">
+
+      <OrdersFilter />
+
+      <OrdersTable orders={orders} />
+
+      <OrdersStats />
+
+    </div>
+  );
+}
