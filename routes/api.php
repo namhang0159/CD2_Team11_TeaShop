@@ -8,7 +8,10 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentMethodController;
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\PaymentController;
-
+use App\Http\Controllers\Admin\UploadController as AdminUploadController;
+use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
+use App\Http\Controllers\Admin\ProductController as AdminProductController;
+use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 // Các API không cần đăng nhập
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
@@ -44,4 +47,26 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/addresses/{id}', [AddressController::class, 'destroy']); // Xóa
     // API Lấy link VNPay
     Route::post('/payment/vnpay/{orderId}', [PaymentController::class, 'createPaymentUrl']);
+
+    //
+    Route::middleware(['auth:sanctum', \App\Http\Middleware\CheckAdmin::class])->prefix('admin')->group(function () {
+
+        // API Upload Ảnh
+        Route::post('/upload', [AdminUploadController::class, 'uploadImage']);
+
+        // API Danh Mục
+        Route::get('/categories', [AdminCategoryController::class, 'index']);
+        Route::post('/categories', [AdminCategoryController::class, 'store']);
+        Route::put('/categories/{id}', [AdminCategoryController::class, 'update']);
+        Route::delete('/categories/{id}', [AdminCategoryController::class, 'destroy']);
+
+        // API Sản Phẩm
+        Route::post('/products', [AdminProductController::class, 'store']);
+        Route::delete('/products/{id}', [AdminProductController::class, 'destroy']);
+
+        // Quản lý Đơn Hàng (Admin Order)
+        Route::get('/orders', [AdminOrderController::class, 'index']); // Xem danh sách
+        Route::get('/orders/{id}', [AdminOrderController::class, 'show']); // Xem chi tiết
+        Route::put('/orders/{id}/status', [AdminOrderController::class, 'updateStatus']); // Đổi trạng thái
+    });
 });
