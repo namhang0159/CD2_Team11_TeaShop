@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Mar 24, 2026 at 01:09 PM
+-- Generation Time: Mar 28, 2026 at 01:38 PM
 -- Server version: 9.1.0
 -- PHP Version: 8.3.14
 
@@ -36,8 +36,8 @@ CREATE TABLE IF NOT EXISTS `address` (
   `receiver_name` varchar(100) DEFAULT NULL,
   `is_default` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`id`),
-  KEY `user_id` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `fk_address_user` (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `address`
@@ -88,8 +88,8 @@ CREATE TABLE IF NOT EXISTS `cart` (
   `user_id` int DEFAULT NULL,
   `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  KEY `user_id` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `fk_cart_user` (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `cart`
@@ -111,9 +111,17 @@ CREATE TABLE IF NOT EXISTS `cart_item` (
   `variant_id` int DEFAULT NULL,
   `quantity` int DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `cart_id` (`cart_id`),
-  KEY `variant_id` (`variant_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `fk_cart_item_cart` (`cart_id`),
+  KEY `fk_cart_item_variant` (`variant_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `cart_item`
+--
+
+INSERT INTO `cart_item` (`id`, `cart_id`, `variant_id`, `quantity`) VALUES
+(4, 1, 2, 5),
+(5, 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -130,7 +138,7 @@ CREATE TABLE IF NOT EXISTS `category` (
   `description` text,
   `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `category`
@@ -138,7 +146,8 @@ CREATE TABLE IF NOT EXISTS `category` (
 
 INSERT INTO `category` (`id`, `name`, `image_url`, `slug`, `description`, `created_at`) VALUES
 (1, 'Trà Xanh', 'https://example.com/images/tra_xanh.jpg', 'tra-xanh', 'Trà xanh nguyên chất, thơm ngon và tốt cho sức khỏe', '2026-03-20 14:49:11'),
-(2, 'Trà Ô Long', 'https://example.com/images/tra_olong.jpg', 'tra-olong', 'Trà Ô Long cao cấp, thơm nồng, hương vị đặc trưng', '2026-03-20 14:57:58');
+(2, 'Trà Ô Long', 'https://example.com/images/tra_olong.jpg', 'tra-olong', 'Trà Ô Long cao cấp, thơm nồng, hương vị đặc trưng', '2026-03-20 14:57:58'),
+(4, 'Trà Xanh Thái Nguyên', 'https://link-anh.com/tra-xanh.jpg', 'tra-xanh-thai-nguyen', 'Các loại trà xanh thơm ngon từ Thái Nguyên', '2026-03-25 16:03:49');
 
 -- --------------------------------------------------------
 
@@ -173,8 +182,8 @@ CREATE TABLE IF NOT EXISTS `inventory_batch` (
   `stock_quantity` int DEFAULT '0',
   `expiry_date` date DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `variant_id` (`variant_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `fk_inventory_batch_variant` (`variant_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `inventory_batch`
@@ -266,16 +275,17 @@ CREATE TABLE IF NOT EXISTS `orders` (
   `payment_status` varchar(20) DEFAULT NULL,
   `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  KEY `user_id` (`user_id`),
-  KEY `payment_method_id` (`payment_method_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `fk_orders_user` (`user_id`),
+  KEY `fk_orders_address` (`shipping_address_id`),
+  KEY `fk_orders_payment` (`payment_method_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `orders`
 --
 
 INSERT INTO `orders` (`id`, `user_id`, `payment_method_id`, `total_amount`, `status`, `shipping_address_id`, `shipping_fee`, `payment_status`, `created_at`) VALUES
-(1, 3, 1, 220000.00, 'Processing', 1, 30000.00, 'Paid', '2026-03-20 10:55:53'),
+(1, 3, 1, 220000.00, 'Delivered', 1, 30000.00, 'Paid', '2026-03-20 10:55:53'),
 (2, 3, 1, 125000.00, 'Processing', 1, 30000.00, 'Paid', '2026-03-21 06:34:19');
 
 -- --------------------------------------------------------
@@ -292,9 +302,9 @@ CREATE TABLE IF NOT EXISTS `order_item` (
   `quantity` int DEFAULT NULL,
   `price_at_purchase` decimal(15,2) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `order_id` (`order_id`),
-  KEY `variant_id` (`variant_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `fk_order_item_order` (`order_id`),
+  KEY `fk_order_item_variant` (`variant_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `order_item`
@@ -316,7 +326,7 @@ CREATE TABLE IF NOT EXISTS `payment_method` (
   `name` varchar(50) DEFAULT NULL,
   `is_active` tinyint(1) DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `payment_method`
@@ -352,7 +362,7 @@ CREATE TABLE IF NOT EXISTS `personal_access_tokens` (
   UNIQUE KEY `personal_access_tokens_token_unique` (`token`),
   KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`),
   KEY `personal_access_tokens_expires_at_index` (`expires_at`)
-) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `personal_access_tokens`
@@ -364,7 +374,12 @@ INSERT INTO `personal_access_tokens` (`id`, `tokenable_type`, `tokenable_id`, `n
 (5, 'App\\Models\\User', 3, 'auth_token', '5b80b6b3f1fa29838025eaea32417212412bc7c48312d000582a0fe8e2223f27', '[\"*\"]', NULL, NULL, '2026-03-19 23:16:22', '2026-03-19 23:16:22'),
 (7, 'App\\Models\\User', 3, 'auth_token', '36a2240a48b3047c7984c09892b523d5742ca9bccbc8493fc04405003c15b9f2', '[\"*\"]', '2026-03-20 23:44:34', NULL, '2026-03-20 01:57:19', '2026-03-20 23:44:34'),
 (8, 'App\\Models\\User', 3, 'auth_token', '573ab925c653c03e07661505ac2851711bfb8bfaa5c0a8f3a333f719a26afbd8', '[\"*\"]', NULL, NULL, '2026-03-20 03:51:36', '2026-03-20 03:51:36'),
-(9, 'App\\Models\\User', 3, 'auth_token', '24f37808b777edbdc6401bf8a9ea7f98965c5a3e303601e4bba5dad43c5a8c87', '[\"*\"]', NULL, NULL, '2026-03-20 23:32:31', '2026-03-20 23:32:31');
+(9, 'App\\Models\\User', 3, 'auth_token', '24f37808b777edbdc6401bf8a9ea7f98965c5a3e303601e4bba5dad43c5a8c87', '[\"*\"]', NULL, NULL, '2026-03-20 23:32:31', '2026-03-20 23:32:31'),
+(10, 'App\\Models\\User', 3, 'auth_token', 'a59beae9ac6a405b52adc6cdcc6e17ac8908b36860e92c514173dd50a5ca6f63', '[\"*\"]', '2026-03-24 07:27:58', NULL, '2026-03-24 06:31:56', '2026-03-24 07:27:58'),
+(11, 'App\\Models\\User', 3, 'auth_token', '1b4a17e2aa1269a1c19ba4230e491b3cb872ef0360091fb60640fcd7ac85ffa1', '[\"*\"]', '2026-03-24 07:34:13', NULL, '2026-03-24 07:28:59', '2026-03-24 07:34:13'),
+(12, 'App\\Models\\User', 3, 'auth_token', '34f1d4c4d79421c6f420e1f064c0c01a655f0e208a62481899f92be341d819ed', '[\"*\"]', '2026-03-25 09:03:49', NULL, '2026-03-25 07:36:50', '2026-03-25 09:03:49'),
+(13, 'App\\Models\\User', 3, 'auth_token', 'b46ad708561d57d8f14760ee916a6a0b72f2e522ab08317b7a2a499278e8c822', '[\"*\"]', '2026-03-25 09:05:07', NULL, '2026-03-25 08:17:33', '2026-03-25 09:05:07'),
+(14, 'App\\Models\\User', 3, 'auth_token', '960b4253d3b925c00c9bfa394f77c845200803fb6d86d312235fd4ef10462120', '[\"*\"]', '2026-03-27 08:14:31', NULL, '2026-03-27 08:08:56', '2026-03-27 08:14:31');
 
 -- --------------------------------------------------------
 
@@ -384,8 +399,8 @@ CREATE TABLE IF NOT EXISTS `product` (
   `slug` varchar(100) DEFAULT NULL,
   `status` varchar(20) DEFAULT 'active',
   PRIMARY KEY (`id`),
-  KEY `category_id` (`category_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `fk_product_category` (`category_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `product`
@@ -408,8 +423,8 @@ CREATE TABLE IF NOT EXISTS `product_attribute` (
   `attribute_name` varchar(50) DEFAULT NULL,
   `attribute_value` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `product_id` (`product_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `fk_product_attribute` (`product_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `product_attribute`
@@ -437,8 +452,8 @@ CREATE TABLE IF NOT EXISTS `product_image` (
   `product_id` int DEFAULT NULL,
   `url` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `product_id` (`product_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `fk_product_image` (`product_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `product_image`
@@ -461,8 +476,8 @@ CREATE TABLE IF NOT EXISTS `product_variant` (
   `option_name` varchar(20) DEFAULT NULL,
   `price` decimal(15,2) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `product_id` (`product_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `fk_product_variant` (`product_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `product_variant`
@@ -472,6 +487,58 @@ INSERT INTO `product_variant` (`id`, `product_id`, `option_name`, `price`) VALUE
 (1, 1, '200g', 120000.00),
 (2, 2, '100g', 95000.00),
 (3, 2, '200g', 180000.00);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `purchase_order`
+--
+
+DROP TABLE IF EXISTS `purchase_order`;
+CREATE TABLE IF NOT EXISTS `purchase_order` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `supplier_id` int NOT NULL,
+  `import_date` datetime DEFAULT CURRENT_TIMESTAMP,
+  `total_amount` decimal(15,2) DEFAULT '0.00',
+  `status` enum('Pending','Received','Cancelled') DEFAULT 'Pending',
+  PRIMARY KEY (`id`),
+  KEY `fk_po_supplier` (`supplier_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `purchase_order_item`
+--
+
+DROP TABLE IF EXISTS `purchase_order_item`;
+CREATE TABLE IF NOT EXISTS `purchase_order_item` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `purchase_order_id` int NOT NULL,
+  `variant_id` int NOT NULL,
+  `quantity` int NOT NULL,
+  `import_price` decimal(15,2) NOT NULL,
+  `batch_code` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_poi_order` (`purchase_order_id`),
+  KEY `fk_poi_variant` (`variant_id`)
+) ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `supplier`
+--
+
+DROP TABLE IF EXISTS `supplier`;
+CREATE TABLE IF NOT EXISTS `supplier` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `phone` varchar(20) DEFAULT NULL,
+  `address` text,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -491,7 +558,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`),
   UNIQUE KEY `phone_number` (`phone_number`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `user`
@@ -500,7 +567,89 @@ CREATE TABLE IF NOT EXISTS `user` (
 INSERT INTO `user` (`id`, `full_name`, `email`, `role`, `phone_number`, `password_hash`, `created_at`) VALUES
 (1, 'Nguyen Van A', 'nguyenvana@gmail.com', 'user', '0987654321', '$2y$12$E5o7ypE6Nh6uvK1Jmbr9Pua4UHbWv9IKWwMyqae.Ei7nkH6zKo5d6', '2026-03-20 05:36:29'),
 (2, 'Nguyễn Trung Nguyên', 'nguyenvanabc@gmail.com', 'user', '0337629744', '$2y$12$T09QTQgnpo0t2d.NPNIIA.qZajcqcP2mvIrZTG.GPTyB0tn7xUIw6', '2026-03-20 06:13:06'),
-(3, 'Nguyễn', 'nguyenvanabcd@gmail.com', 'user', '0337629784', '$2y$12$2dAtnjkyQgH9KAWq3cZIMugD6MVxXvw/H7kklSu/lUW8rFikkrvlO', '2026-03-20 06:16:22');
+(3, 'Nguyễn', 'nguyenvanabcd@gmail.com', 'admin', '0337629784', '$2y$12$2dAtnjkyQgH9KAWq3cZIMugD6MVxXvw/H7kklSu/lUW8rFikkrvlO', '2026-03-20 06:16:22');
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `address`
+--
+ALTER TABLE `address`
+  ADD CONSTRAINT `fk_address_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `cart`
+--
+ALTER TABLE `cart`
+  ADD CONSTRAINT `fk_cart_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `cart_item`
+--
+ALTER TABLE `cart_item`
+  ADD CONSTRAINT `fk_cart_item_cart` FOREIGN KEY (`cart_id`) REFERENCES `cart` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_cart_item_variant` FOREIGN KEY (`variant_id`) REFERENCES `product_variant` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `inventory_batch`
+--
+ALTER TABLE `inventory_batch`
+  ADD CONSTRAINT `fk_inventory_batch` FOREIGN KEY (`variant_id`) REFERENCES `product_variant` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_inventory_batch_variant` FOREIGN KEY (`variant_id`) REFERENCES `product_variant` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `orders`
+--
+ALTER TABLE `orders`
+  ADD CONSTRAINT `fk_orders_address` FOREIGN KEY (`shipping_address_id`) REFERENCES `address` (`id`) ON DELETE SET NULL,
+  ADD CONSTRAINT `fk_orders_payment` FOREIGN KEY (`payment_method_id`) REFERENCES `payment_method` (`id`) ON DELETE SET NULL,
+  ADD CONSTRAINT `fk_orders_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE SET NULL;
+
+--
+-- Constraints for table `order_item`
+--
+ALTER TABLE `order_item`
+  ADD CONSTRAINT `fk_order_item_order` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_order_item_variant` FOREIGN KEY (`variant_id`) REFERENCES `product_variant` (`id`) ON DELETE SET NULL;
+
+--
+-- Constraints for table `product`
+--
+ALTER TABLE `product`
+  ADD CONSTRAINT `fk_product_category` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`) ON DELETE SET NULL;
+
+--
+-- Constraints for table `product_attribute`
+--
+ALTER TABLE `product_attribute`
+  ADD CONSTRAINT `fk_product_attribute` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `product_image`
+--
+ALTER TABLE `product_image`
+  ADD CONSTRAINT `fk_product_image` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `product_variant`
+--
+ALTER TABLE `product_variant`
+  ADD CONSTRAINT `fk_product_variant` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `purchase_order`
+--
+ALTER TABLE `purchase_order`
+  ADD CONSTRAINT `fk_po_supplier` FOREIGN KEY (`supplier_id`) REFERENCES `supplier` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `purchase_order_item`
+--
+ALTER TABLE `purchase_order_item`
+  ADD CONSTRAINT `fk_poi_order` FOREIGN KEY (`purchase_order_id`) REFERENCES `purchase_order` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_poi_variant` FOREIGN KEY (`variant_id`) REFERENCES `product_variant` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
