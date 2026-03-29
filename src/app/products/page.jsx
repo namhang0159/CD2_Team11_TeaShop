@@ -1,6 +1,6 @@
 "use client";
 
-import ProductTable from "@/components/products/ProductRow";
+import ProductTable from "@/components/products/ProductTable";
 import Link from "next/link";
 
 export default function ProductPage() {
@@ -20,7 +20,6 @@ export default function ProductPage() {
         >
           Thêm sản phẩm mới
         </Link>
-
       </div>
 
       <ProductTable />
