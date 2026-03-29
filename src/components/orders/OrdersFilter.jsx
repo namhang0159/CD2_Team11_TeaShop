@@ -1,13 +1,13 @@
 export default function OrdersFilter() {
   return (
-    <div className="bg-white dark:bg-background-dark p-6 rounded-xl border border-primary/10 shadow-sm space-y-4">
+    <div className="bg-white dark:bg-background-dark p-6 rounded-xl border border-primary/10 shadow-sm space-y-4 border border-gray-50" >
 
       <div className="flex flex-col lg:flex-row lg:items-center gap-4">
 
         {/* search */}
         <div className="flex-1">
 
-          <label className="block text-xs font-bold text-primary mb-1 uppercase tracking-wider">
+          <label className="block text-xs font-bold text-primary mb-1 uppercase tracking-widerh">
             Search Orders
           </label>
 
@@ -20,7 +20,7 @@ export default function OrdersFilter() {
            <input
   type="text"
   placeholder="Search by Order ID, customer name..."
-  className="w-full pl-10 pr-4 py-2 bg-green-100 border-none rounded-lg text-sm focus:ring-2 focus:ring-green-300"
+  className="  w-full pl-10 pr-4 py-2 bg-green-100 border-none rounded-lg text-sm focus:ring-2 "
 />
 
           </div>
@@ -47,20 +47,23 @@ export default function OrdersFilter() {
         </div>
 
         {/* date */}
-        <div className="w-full lg:w-64">
+       <div className="w-full lg:w-64">
+  <label className="block text-xs font-bold text-primary mb-1 uppercase tracking-wider">
+    Date Range
+  </label>
 
-          <label className="block text-xs font-bold text-primary mb-1 uppercase tracking-wider">
-            Date Range
-          </label>
-
-          <input
-            type="text"
-            value="Oct 01, 2023 - Oct 31, 2023"
-            className="bg-green-200 text-green-900 p-4 rounded w-full pl-4 pr-4 py-2 bg-primary/5 border-none rounded-lg text-sm"
-            readOnly
-          />
-
-        </div>
+  <div className="flex space-x-2">
+    <input
+      type="date"
+      className="bg-green-200 text-green-900 p-2 rounded w-full border-none text-sm"
+    />
+    <span className="self-center">-</span>
+    <input
+      type="date"
+      className="bg-green-200 text-green-900 p-2 rounded w-full border-none text-sm"
+    />
+  </div>
+</div>
 
       </div>
 

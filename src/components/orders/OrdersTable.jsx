@@ -15,9 +15,9 @@ export default function OrdersTable({ orders }) {
   };
 
   return (
-    <div className="bg-white dark:bg-background-dark rounded-xl border border-primary/10 shadow-sm overflow-hidden">
+    <div className="bg-white dark:bg-background-dark rounded-xl border border-primary/10 shadow-sm overflow-hidden  border-gray-100">
 
-      <table className="w-full text-left border-collapse">
+      <table className="w-full text-left  ">
 
         <thead>
 
@@ -81,26 +81,24 @@ export default function OrdersTable({ orders }) {
     {/* VIEW */}
    <Link
   href={`/orders/${o.id}`}
-  className="p-1.5 rounded bg-primary/10 text-primary"
+  className="p-1.5 rounded bg-primary/10 text-primary  hover:bg-slate-200"
 >
-  <span className="material-symbols-outlined">
-    visibility
+  <span className="material-symbols-outlined fa-solid fa-eye bg-red-400">
+    
   </span>
 </Link>
 
 
     {/* EDIT */}
-    <button className=" p-1.5 rounded bg-emerald-400 text-slate-600 hover:bg-slate-200">
-      <span className=" material-symbols-outlined text-base">
-        edit
+    <button className=" p-1.5 rounded bg-emerald-400 text-slate-600 hover:bg-slate-200 ">
+      <span className=" material-symbols-outlined text-base fa-solid fa-edit">
       </span>
     </button>
 
 
     {/* PRINT */}
-    <button className="bg-pink-300 p-1.5 rounded  text-slate-600 hover:bg-slate-200">
-      <span className="material-symbols-outlined text-base">
-        print
+    <button className="bg-pink-300 p-1.5 rounded  text-slate-600 hover:bg-slate-200 " >
+      <span className="material-symbols-outlined text-base fa-solid fa-print">
       </span>
     </button>
 

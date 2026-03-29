@@ -1,5 +1,5 @@
 "use client";
-
+import Link from "next/link";
 import { addProduct } from "@/data/products";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -35,7 +35,7 @@ const handleSubmit = () => {
 };
   return (
     
-    <div className="bg-gray-50 min-h-screen p-8">
+    <div className="bg-green-50 min-h-screen p-8">
 
       {/* HEADER */}
 
@@ -54,10 +54,12 @@ const handleSubmit = () => {
         </div>
 
         <div className="flex gap-3">
-
-          <button className="px-6 py-2 rounded-lg border border-gray-300">
-            Cancel
-          </button>
+    
+          <Link href="/products">
+  <button className="px-6 py-2 rounded-lg border border-gray-300">
+    Cancel
+  </button>
+</Link>
 
           <button
   onClick={handleSubmit}
@@ -103,7 +105,7 @@ const handleSubmit = () => {
                 <input
   name="name"
   onChange={handleChange}
-  className="w-full rounded-lg border border-gray-300 p-3"
+  className="w-full rounded-lg border border-gray-300 bg-green-50 p-3"
   placeholder="Product name"
 />
 
@@ -117,7 +119,7 @@ const handleSubmit = () => {
                 </label>
 
                 <input
-                  className="w-full rounded-lg border border-gray-300 p-3"
+                  className="w-full rounded-lg border border-gray-300 bg-green-50 p-3"
                   placeholder="SKU"
                 />
 
@@ -130,7 +132,7 @@ const handleSubmit = () => {
                   Category
                 </label>
 
-                <select className="w-full rounded-lg border border-gray-300 p-3">
+                <select className="w-full rounded-lg border border-gray-300 bg-green-50 p-3">
 
                   <option>Select Category</option>
                   <option>Oolong</option>
@@ -147,9 +149,9 @@ const handleSubmit = () => {
                 <label className="block mb-2 text-sm font-medium">
                   Description
                 </label>
-<div className="border border-gray-300 rounded-lg overflow-hidden">
+<div className="border border-gray-300 bg-green-50 rounded-lg overflow-hidden">
 
-  <div className="bg-gray-100 border-b p-2 flex gap-2">
+  <div className="bg-green-100 border-b p-2 flex gap-2">
 
     <button className="px-2 py-1 text-sm">B</button>
     <button className="px-2 py-1 text-sm">I</button>
@@ -292,7 +294,7 @@ const handleSubmit = () => {
   name="price"
   onChange={handleChange}
   type="number"
-  className="w-full rounded-lg border border-gray-300 p-3"
+  className="w-full rounded-lg border border-gray-300 bg-green-50 p-3"
   placeholder="0.00"
 />
 
@@ -324,7 +326,7 @@ const handleSubmit = () => {
           Stock Quantity
         </label>
 
-       <div className="flex items-center border border-gray-300 rounded-lg overflow-hidden">
+       <div className=" bg-green-50 flex items-center border border-gray-300 rounded-lg overflow-hidden">
 
   <button className="px-3 py-2 bg-gray-100">
     -
@@ -335,7 +337,7 @@ const handleSubmit = () => {
   onChange={handleChange}
   type="number"
   defaultValue={0}
-  className="w-full text-center outline-none"
+  className="bg-green-50 w-full text-center outline-none"
 />
 
   <button className="px-3 py-2 bg-gray-100">
@@ -357,7 +359,7 @@ const handleSubmit = () => {
 
         <input
           type="number"
-          className="w-full rounded-lg border border-gray-300 p-3"
+          className="bg-green-50 w-full rounded-lg border border-gray-300 p-3"
           placeholder="5"
         />
 
@@ -404,7 +406,7 @@ const handleSubmit = () => {
       </div>
 
       <input
-        className="w-full rounded-lg border border-gray-300 p-3"
+        className="bg-green-50 w-full rounded-lg border border-gray-300 p-3"
         placeholder="Add tag..."
       />
 
@@ -420,7 +422,7 @@ const handleSubmit = () => {
       </label>
 
       <input
-        className="w-full rounded-lg border border-gray-300 p-3"
+        className="bg-green-50 w-full rounded-lg border border-gray-300 p-3"
         placeholder="Vietnam"
       />
 
