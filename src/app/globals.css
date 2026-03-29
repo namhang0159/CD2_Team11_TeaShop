@@ -4,3 +4,28 @@ body {
   font-family: "Newsreader", serif;
   color: black;
 }
+.ql-container {
+  min-height: 300px;
+}
+
+.ql-editor {
+  min-height: 250px;
+}
+.ProseMirror {
+  min-height: 350px;
+  outline: none;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.ProseMirror p {
+  margin: 6px 0;
+}
+
+.ProseMirror ul {
+  padding-left: 20px;
+}
+
+.ProseMirror ol {
+  padding-left: 20px;
+}

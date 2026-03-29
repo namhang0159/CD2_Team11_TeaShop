@@ -142,3 +142,20 @@ export async function getInventory(params = {}) {
 export const getInventoryDetailById = (id) => {
   return inventoryData.find((item) => item.id === Number(id));
 };
+
+import { blogs } from "@/data/blogs";
+
+export const getBlogs = async () => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(blogs);
+    }, 200);
+  });
+};
+
+import { blogCategories } from "@/data/blog-categories";
+import { blogStatus } from "@/data/blog-status";
+
+export const getCategories = async () => blogCategories;
+
+export const getStatus = async () => blogStatus;
