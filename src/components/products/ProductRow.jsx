@@ -112,16 +112,16 @@ export default function ProductTable() {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="Tìm theo tên sản phẩm hoặc SKU..."
-            className="w-full pl-10 pr-4 py-2.5 border-none rounded-lg bg-gray-50 focus:ring-2 focus:ring-green-600/50"
+            className="w-full pl-10 pr-4 py-2.5 border-none rounded-lg bg-green-50 focus:ring-2 focus:ring-green-600/50"
           />
         </div>
 
         <select
           value={categoryFilter}
           onChange={(e) => setCategoryFilter(e.target.value)}
-          className="bg-gray-50 border-none rounded-lg text-sm py-2.5 pl-4 pr-10 focus:ring-2 focus:ring-green-600/50"
+          className="bg-green-50 border-none rounded-lg text-sm py-2.5 pl-4 pr-10 focus:ring-2 focus:ring-green-600/50"
         >
-          <option value="">Tất cả danh mục</option>
+          <option className="" value="">Tất cả danh mục</option>
           <option value="tra">Trà</option>
           <option value="phukien">Phụ kiện</option>
         </select>
@@ -129,7 +129,7 @@ export default function ProductTable() {
         <select
           value={statusFilter}
           onChange={(e) => setStatusFilter(e.target.value)}
-          className="bg-gray-50 border-none rounded-lg text-sm py-2.5 pl-4 pr-10 focus:ring-2 focus:ring-green-600/50"
+          className="bg-green-50 border-none rounded-lg text-sm py-2.5 pl-4 pr-10 focus:ring-2 focus:ring-green-600/50"
         >
           <option value="">Tình trạng kho</option>
           <option value="inStock">In Stock</option>
