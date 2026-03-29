@@ -61,6 +61,24 @@ export async function getTopProducts() {
   ];
 }
 
+import { products } from "@/data/products";
+
+export const getProducts = async () => {
+  return new Promise((res) => {
+    setTimeout(() => {
+      res(products);
+    }, 300);
+  });
+};
+
+export const getProductById = async (id) => {
+  return new Promise((res) => {
+    setTimeout(() => {
+      const product = products.find((p) => p.id === Number(id));
+      res(product);
+    }, 300);
+  });
+};
 export async function getRecentOrders() {
   return [
     {
