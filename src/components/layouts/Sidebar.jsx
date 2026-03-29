@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import SidebarItem from "./SidebarItem";
+import { icon } from "@fortawesome/fontawesome-svg-core";
 
 export default function Sidebar() {
   const menu = [
@@ -10,6 +11,14 @@ export default function Sidebar() {
     { icon: "fa-box", label: "Product Management", href: "products" },
     { icon: "fa-user", label: "Customer List", href: "customers" },
     { icon: "fa-adjust", label: "Blog Posts", href: "blog" },
+    { icon: "fa-chart-bar", label: "Analytics", href: "analytics" },
+    {
+      icon: "fa-shopping-bag",
+      label: "Inventory Management",
+      href: "inventory",
+    },
+    { icon: "fa-box-open", label: "Import Management", href: "import" },
+    { icon: "fa-truck", label: "Suppliers", href: "suppliers" },
     { icon: "fa-cog", label: "Settings", href: "settings" },
   ];
 
@@ -17,6 +26,7 @@ export default function Sidebar() {
     <aside className="w-64 border-r border-green-600/10 bg-white flex flex-col justify-between p-4 h-screen">
       <div className="flex flex-col gap-8">
         {/* Logo */}
+
         <div className="flex items-center gap-3 px-2">
           <div className="w-10 h-10 rounded-full bg-green-600/20 overflow-hidden">
             <Image

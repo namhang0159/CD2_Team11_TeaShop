@@ -5,7 +5,7 @@ import OrderLogistics from "./OrderLogistics";
 
 export default function OrderDetail({ order }) {
   return (
-    <div className="max-w-6xl mx-auto p-8 space-y-8">
+    <div className="max-w-6xl mx-auto p-8 space-y-8 bg-green-50">
       {/* header */}
 
       <div>

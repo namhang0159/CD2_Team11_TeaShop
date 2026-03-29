@@ -6,14 +6,12 @@ import { orders } from "@/data/orders";
 
 export default function Page() {
   return (
-    <div className="space-y-6">
-
+    <div className="space-y-6 ">
       <OrdersFilter />
 
       <OrdersTable orders={orders} />
 
       <OrdersStats />
-
     </div>
   );
 }

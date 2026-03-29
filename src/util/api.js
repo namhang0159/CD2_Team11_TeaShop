@@ -97,6 +97,7 @@ export async function getRecentOrders() {
     },
   ];
 }
+import { inventoryData } from "@/data/import";
 import { orders } from "@/data/orders";
 
 export const getOrders = async () => {
@@ -105,4 +106,39 @@ export const getOrders = async () => {
       res(orders);
     }, 300);
   });
+};
+
+export async function getInventory(params = {}) {
+  await new Promise((res) => setTimeout(res, 300));
+
+  let data = [...inventoryData];
+
+  // search
+  if (params.keyword) {
+    const keyword = params.keyword.toLowerCase();
+    data = data.filter(
+      (item) =>
+        item.name.toLowerCase().includes(keyword) ||
+        item.sku.toLowerCase().includes(keyword),
+    );
+  }
+
+  // category
+  if (params.category && params.category !== "all") {
+    data = data.filter((item) => item.category === params.category);
+  }
+
+  // status
+  if (params.status && params.status !== "all") {
+    data = data.filter((item) => item.status === params.status);
+  }
+
+  return {
+    data,
+    total: data.length,
+  };
+}
+
+export const getInventoryDetailById = (id) => {
+  return inventoryData.find((item) => item.id === Number(id));
 };
