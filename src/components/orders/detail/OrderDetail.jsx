@@ -21,9 +21,7 @@ export default function OrderDetail({ order }) {
 
       <div className="grid grid-cols-3 gap-6">
         <Card title="Order Date" value={order.date} />
-
         <Card title="Order Status" value={order.status} />
-
         <Card title="Total Amount" value={`$${order.total}`} primary />
       </div>
 
@@ -32,13 +30,11 @@ export default function OrderDetail({ order }) {
       <div className="grid grid-cols-3 gap-8">
         <div className="col-span-2 space-y-8">
           <OrderItems order={order} />
-
           <OrderTimeline order={order} />
         </div>
 
         <div className="space-y-8">
           <OrderCustomer order={order} />
-
           <OrderLogistics order={order} />
         </div>
       </div>
@@ -48,7 +44,7 @@ export default function OrderDetail({ order }) {
 
 function Card({ title, value, primary }) {
   return (
-    <div className="p-6 bg-white border border-primary/10 rounded-xl shadow-sm">
+    <div className="p-6 bg-white rounded-xl shadow-sm">
       <p className="text-sm text-slate-500">{title}</p>
 
       <p className={`text-2xl font-bold ${primary ? "text-primary" : ""}`}>
@@ -57,3 +53,4 @@ function Card({ title, value, primary }) {
     </div>
   );
 }
+

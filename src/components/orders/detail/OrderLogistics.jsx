@@ -14,7 +14,7 @@ export default function OrderLogistics({ order }) {
             Payment Method
           </p>
 
-          <div className="p-3 bg-primary/5 rounded-lg border border-primary/10">
+          <div className="p-3 bg-primary/5 rounded-lg bg-green-50 ">
             {order.payment}
           </div>
 
@@ -23,11 +23,11 @@ export default function OrderLogistics({ order }) {
 
         <div>
 
-          <p className="text-xs uppercase text-slate-500 font-bold mb-1">
+          <p className="text-xs uppercase text-slate-500 font-bold mb-1 ">
             Shipping Method
           </p>
 
-          <div className="p-3 bg-primary/5 rounded-lg border border-primary/10">
+          <div className="p-3 bg-primary/5 rounded-lg  bg-green-50">
             {order.shipping}
           </div>
 

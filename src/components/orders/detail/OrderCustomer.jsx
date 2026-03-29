@@ -1,12 +1,12 @@
 export default function OrderCustomer({ order }) {
   return (
-    <div className="bg-white border border-primary/10 rounded-xl shadow-sm p-6">
+    <div className="bg-white  rounded-xl shadow-sm p-6">
       <h3 className="text-xl font-bold mb-6">Customer Details</h3>
 
       <div className="flex items-center gap-4 mb-6">
         <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary">
           <span className="material-symbols-outlined">
-            <i class="fa fa-person" aria-hidden="true"></i>
+            <i className="fa-solid fa-person" aria-hidden="true"></i>
           </span>
         </div>
 
@@ -19,11 +19,11 @@ export default function OrderCustomer({ order }) {
 
       <div className="space-y-3">
         <p>
-          <i class="fa fa-mail-forward" aria-hidden="true"></i>: {order.email}
+          <i className="fa fa-mail-forward" aria-hidden="true"></i>: {order.email}
         </p>
 
         <p>
-          <i class="fa fa-phone" aria-hidden="true"></i>: {order.phone}
+          <i className="fa fa-phone" aria-hidden="true"></i>: {order.phone}
         </p>
 
         <p>{order.address}</p>

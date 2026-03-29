@@ -1,6 +1,6 @@
 export default function OrderTimeline({ order }) {
   return (
-    <div className="bg-white border border-primary/10 rounded-xl shadow-sm p-6">
+    <div className="bg-white  rounded-xl shadow-sm p-6">
 
       <h3 className="text-xl font-bold mb-6">
         Order Timeline
