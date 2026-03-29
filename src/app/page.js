@@ -9,7 +9,6 @@ export default function LoginPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // TODO: call API login
     const res = await Login(e.target.email.value, e.target.password.value);
     if (res.status === 200) {
       alert("Login successful");
