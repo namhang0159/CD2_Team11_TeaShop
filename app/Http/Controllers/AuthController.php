@@ -38,6 +38,18 @@ class AuthController extends Controller
             ]
         ]);
     }
+    public function loginAdmin(LoginRequest $request): JsonResponse
+    {
+        $result = $this->authService->loginAdmin($request->validated());
+
+        return response()->json([
+            'message' => 'Đăng nhập thành công',
+            'data' => [
+                'user' => new UserResource($result['admin']), // Đổi tên thành admin để dễ phân biệt
+                'token' => $result['token'],
+            ]
+        ]);
+    }
 
     // public function logout(): JsonResponse
     // {

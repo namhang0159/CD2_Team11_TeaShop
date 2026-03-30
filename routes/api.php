@@ -16,7 +16,7 @@ use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
-
+Route::post('/admin/login', [AuthController::class, 'loginAdmin']); // API đăng nhập cho admin
 // Public Routes
 Route::get('/categories', [ProductController::class, 'categories']);
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');
@@ -62,6 +62,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
         // API Sản Phẩm
         Route::post('/products', [AdminProductController::class, 'store']);
+        Route::put('/products/edit/{id}', [AdminProductController::class, 'edit']); // Dùng POST để gửi dữ liệu cập nhật
         Route::delete('/products/{id}', [AdminProductController::class, 'destroy']);
 
         // Quản lý Đơn Hàng (Admin Order)
