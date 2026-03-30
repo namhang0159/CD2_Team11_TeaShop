@@ -16,7 +16,7 @@ export default function ProductTable() {
     const fetchProducts = async () => {
       try {
         const res = await getProductsAPI();
-        const rawData = res.data.data;
+        const rawData = res.data;
         console.log("Raw API data:", rawData);
         // 🔥 Map API -> UI
         const mapped = rawData.map((item) => {

@@ -3,6 +3,8 @@
 import Image from "next/image";
 import SidebarItem from "./SidebarItem";
 import { icon } from "@fortawesome/fontawesome-svg-core";
+import { use, useEffect, useState } from "react";
+import { FetchMe } from "@/util/auth";
 
 export default function Sidebar() {
   const menu = [
@@ -21,7 +23,30 @@ export default function Sidebar() {
     { icon: "fa-truck", label: "Suppliers", href: "suppliers" },
     { icon: "fa-cog", label: "Settings", href: "settings" },
   ];
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
 
+  useEffect(() => {
+    const fetchAdmin = async () => {
+      try {
+        const res = await FetchMe();
+        setName(res.data.full_name);
+        setEmail(res.data.email);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    const token = localStorage.getItem("token");
+    if (!token) {
+      window.location.href = "/";
+    } else {
+      fetchAdmin();
+    }
+  }, []);
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    window.location.href = "/";
+  };
   return (
     <aside className="w-64 border-r border-green-600/10 bg-white flex flex-col justify-between p-4 h-screen">
       <div className="flex flex-col gap-8">
@@ -66,13 +91,14 @@ export default function Sidebar() {
           </div>
 
           <div className="flex flex-col overflow-hidden">
-            <span className="text-xs font-bold text-black">Admin User</span>
-            <span className="text-[10px] text-slate-500 truncate">
-              admin@thienantea.com
-            </span>
+            <span className="text-xs font-bold text-black">{name}</span>
+            <span className="text-[10px] text-slate-500 truncate">{email}</span>
           </div>
 
-          <button className="ml-auto text-slate-400 hover:text-red-500">
+          <button
+            className="ml-auto text-slate-400 hover:text-red-500"
+            onClick={handleLogout}
+          >
             <span className="material-symbols-outlined text-sm">
               <i className="fa fa-sign-out" aria-hidden="true"></i>
             </span>

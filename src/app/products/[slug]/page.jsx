@@ -2,18 +2,18 @@
 
 import { getProductBySlugAPI } from "@/util/products";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function ProductDetailPage() {
   const params = useParams();
   const [product, setProduct] = useState(null);
-
+  const router = useRouter();
   useEffect(() => {
     const fetchDetail = async () => {
       try {
         const res = await getProductBySlugAPI(params.slug);
-        const item = res.data.data;
+        const item = res.data;
 
         const variant = item.variants?.[0] || {};
         const stock = Number(variant.stock || 0);
@@ -134,7 +134,10 @@ export default function ProductDetailPage() {
 
             {/* ACTION */}
             <div className="flex gap-3 mt-6">
-              <button className="px-5 py-2 rounded-lg bg-green-600 text-white hover:bg-green-700 transition">
+              <button
+                onClick={() => router.push(`/products/${product.slug}/edit`)}
+                className="px-5 py-2 rounded-lg bg-green-600 text-white hover:bg-green-700 transition"
+              >
                 Chỉnh sửa
               </button>
 

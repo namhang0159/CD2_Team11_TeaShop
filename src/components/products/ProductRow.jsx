@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 export default function ProductRow({ product }) {
+  const router = useRouter();
   const statusColors = {
     inStock: "text-green-600 bg-green-100",
     lowStock: "text-orange-500 bg-orange-100",
@@ -65,7 +67,10 @@ export default function ProductRow({ product }) {
         </span>
       </td>
       <td className="px-6 py-4 flex justify-center gap-2">
-        <button className="p-1.5 rounded-lg hover:bg-green-600 hover:text-white text-gray-400">
+        <button
+          className="p-1.5 rounded-lg hover:bg-green-600 hover:text-white text-gray-400"
+          onClick={() => router.push(`/products/${product.slug}/edit`)}
+        >
           <span className="material-symbols-outlined text-sm">
             <i className="fa fa-edit" aria-hidden="true"></i>
           </span>

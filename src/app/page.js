@@ -10,8 +10,9 @@ export default function LoginPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const res = await Login(e.target.email.value, e.target.password.value);
-    if (res.status === 200) {
+    if (res.message === "Đăng nhập thành công") {
       alert("Login successful");
+      localStorage.setItem("token", res.data.token);
       setTimeout(() => {
         window.location.href = "/dashboard";
       }, 1000);
