@@ -26,7 +26,7 @@ class RegisterRequest extends FormRequest
             'full_name' => 'required|string|max:100',
             'email' => 'required|email|max:100|unique:user,email', // Bắt buộc và check trùng email
             'phone_number' => 'nullable|string|max:15|unique:user,phone_number', // SĐT có thể để trống hoặc bắt buộc tuỳ mày
-            'password' => 'required|string|min:6|confirmed',
+            'password' => 'required|min:6',
         ];
     }
 }

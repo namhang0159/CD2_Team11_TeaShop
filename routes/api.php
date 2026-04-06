@@ -12,6 +12,8 @@ use App\Http\Controllers\Admin\UploadController as AdminUploadController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
+use App\Http\Controllers\PostController;
+
 // Các API không cần đăng nhập
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
@@ -24,6 +26,8 @@ Route::get('/products/{slug}', [ProductController::class, 'show']);
 Route::get('/payment-methods', [PaymentMethodController::class, 'index']);
 // Webhook cho VNPay
 Route::get('/payment/vnpay-ipn', [PaymentController::class, 'vnpayIpn']);
+Route::get('/posts', [PostController::class, 'index']);
+Route::get('/posts/{slug}', [PostController::class, 'show']);
 
 // Link VNPay trả khách về (Dùng xử lý lúc đang dev ở localhost)
 Route::get('/payment/vnpay-return', [PaymentController::class, 'vnpayReturn']);
@@ -69,5 +73,8 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/orders', [AdminOrderController::class, 'index']); // Xem danh sách
         Route::get('/orders/{id}', [AdminOrderController::class, 'show']); // Xem chi tiết
         Route::put('/orders/{id}/status', [AdminOrderController::class, 'updateStatus']); // Đổi trạng thái
+        Route::post('/posts', [PostController::class, 'store']);
+        Route::put('/posts/{id}', [PostController::class, 'update']);
+        Route::delete('/posts/{id}', [PostController::class, 'destroy']);    
     });
 });
