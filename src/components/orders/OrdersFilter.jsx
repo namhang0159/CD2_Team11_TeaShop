@@ -1,72 +1,75 @@
-export default function OrdersFilter() {
+export default function OrdersFilter({
+  search,
+  setSearch,
+  status,
+  setStatus,
+  fromDate,
+  setFromDate,
+  toDate,
+  setToDate,
+}) {
   return (
-    <div className="bg-white dark:bg-background-dark p-6 rounded-xl border border-primary/10 shadow-sm space-y-4 border border-gray-50" >
-
-      <div className="flex flex-col lg:flex-row lg:items-center gap-4">
-
-        {/* search */}
+    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 space-y-5">
+      <div className="flex flex-col lg:flex-row gap-4">
+        {/* SEARCH */}
         <div className="flex-1">
-
-          <label className="block text-xs font-bold text-primary mb-1 uppercase tracking-widerh">
-            Search Orders
+          <label className="text-xs font-semibold text-gray-500 uppercase">
+            Search
           </label>
 
-          <div className=  "bg-green-700 relative" >
-
-            <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
-</span>
-
-
-           <input
-  type="text"
-  placeholder="Search by Order ID, customer name..."
-  className="  w-full pl-10 pr-4 py-2 bg-green-100 border-none rounded-lg text-sm focus:ring-2 "
-/>
-
+          <div className="relative mt-1">
+            <input
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search by order ID or customer..."
+              className="w-full pl-10 pr-4 py-2 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-100 outline-none"
+            />
+            <span className="absolute left-3 top-2.5 text-gray-400">🔍</span>
           </div>
-
         </div>
 
-        {/* status */}
+        {/* STATUS */}
         <div className="w-full lg:w-48">
-
-          <label className=" block text-xs font-bold text-primary mb-1 uppercase tracking-wider">
-            Order Status
+          <label className="text-xs font-semibold text-gray-500 uppercase">
+            Status
           </label>
 
-          <select className="bg-green-200 text-green-900 p-4 rounded w-full bg-primary/5 border-none rounded-lg text-sm py-2">
-
-            <option>All Statuses</option>
+          <select
+            value={status}
+            onChange={(e) => setStatus(e.target.value)}
+            className="mt-1 w-full py-2 px-3 rounded-xl border border-gray-200"
+          >
+            <option value="All">All</option>
             <option>Pending</option>
             <option>Shipped</option>
             <option>Delivered</option>
             <option>Cancelled</option>
-
           </select>
-
         </div>
 
-        {/* date */}
-       <div className="w-full lg:w-64">
-  <label className="block text-xs font-bold text-primary mb-1 uppercase tracking-wider">
-    Date Range
-  </label>
+        {/* DATE */}
+        <div className="w-full lg:w-72">
+          <label className="text-xs font-semibold text-gray-500 uppercase">
+            Date Range
+          </label>
 
-  <div className="flex space-x-2">
-    <input
-      type="date"
-      className="bg-green-200 text-green-900 p-2 rounded w-full border-none text-sm"
-    />
-    <span className="self-center">-</span>
-    <input
-      type="date"
-      className="bg-green-200 text-green-900 p-2 rounded w-full border-none text-sm"
-    />
-  </div>
-</div>
+          <div className="flex gap-2 mt-1">
+            <input
+              type="date"
+              value={fromDate}
+              onChange={(e) => setFromDate(e.target.value)}
+              className="w-full py-2 px-3 rounded-xl border border-gray-200"
+            />
 
+            <input
+              type="date"
+              value={toDate}
+              onChange={(e) => setToDate(e.target.value)}
+              className="w-full py-2 px-3 rounded-xl border border-gray-200"
+            />
+          </div>
+        </div>
       </div>
-
     </div>
   );
 }

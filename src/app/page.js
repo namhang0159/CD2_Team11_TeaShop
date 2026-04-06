@@ -10,6 +10,7 @@ export default function LoginPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const res = await Login(e.target.email.value, e.target.password.value);
+    console.log(res);
     if (res.message === "Đăng nhập thành công") {
       alert("Login successful");
       localStorage.setItem("token", res.data.token);

@@ -1,28 +1,30 @@
-export default function OrdersStats() {
+export default function OrdersStats({ orders = [] }) {
+  const list = Array.isArray(orders) ? orders : [];
+
+  const total = list.length;
+
+  const revenue = list.reduce((sum, o) => sum + Number(o.total_amount || 0), 0);
+
+  const pending = list.filter((o) => o.status === "Pending").length;
+
+  const delivered = list.filter((o) => o.status === "Delivered").length;
+
   return (
-    <div className="grid grid-cols-1 md:grid-cols-4 gap-4 text-green-600">
-
-      <Box title="Today's Orders" value="12" />
-      <Box title="Total Revenue" value="$1240" />
-      <Box title="Pending Shipment" value="7" />
-      <Box title="Active Customers" value="892" />
-
+    <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <Box title="Total Orders" value={total} />
+      <Box title="Revenue" value={revenue.toLocaleString("vi-VN") + "₫"} />
+      <Box title="Pending" value={pending} />
+      <Box title="Delivered" value={delivered} />
     </div>
   );
 }
 
 function Box({ title, value }) {
   return (
-    <div className="bg-white dark:bg-background-dark p-4 rounded-xl border border-primary/10 shadow-sm border border-gray-100">
+    <div className="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm hover:shadow-md transition">
+      <p className="text-xs text-gray-500 uppercase font-semibold">{title}</p>
 
-      <p className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-1">
-        {title}
-      </p>
-
-      <div className="text-2xl font-black text-primary">
-        {value}
-      </div>
-
+      <div className="text-2xl font-bold text-gray-800 mt-1">{value}</div>
     </div>
   );
 }
