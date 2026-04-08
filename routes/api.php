@@ -12,6 +12,8 @@ use App\Http\Controllers\Admin\UploadController as AdminUploadController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\PostCategoryController;
 use App\Http\Controllers\PostController;
 
 // Các API không cần đăng nhập
@@ -75,6 +77,12 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::put('/orders/{id}/status', [AdminOrderController::class, 'updateStatus']); // Đổi trạng thái
         Route::post('/posts', [PostController::class, 'store']);
         Route::put('/posts/{id}', [PostController::class, 'update']);
-        Route::delete('/posts/{id}', [PostController::class, 'destroy']);    
+        Route::delete('/posts/{id}', [PostController::class, 'destroy']);
+        Route::get('/post-categories', [PostCategoryController::class, 'index']);  
+        Route::post('/post-categories', [PostCategoryController::class, 'store']);
+        Route::put('/post-categories/{id}', [PostCategoryController::class, 'update']);
+        Route::delete('/post-categories/{id}', [PostCategoryController::class, 'destroy']); 
+        Route::get('customers', [CustomerController::class, 'index']); // Xem danh sách khách hàng
+        Route::get('customers/{id}', [CustomerController::class, 'show']); // Xem chi tiết khách hàng
     });
 });
