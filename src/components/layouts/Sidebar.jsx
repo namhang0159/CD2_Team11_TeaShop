@@ -11,9 +11,9 @@ export default function Sidebar() {
     { icon: "fa-dashboard", label: "Dashboard", href: "dashboard" },
     { icon: "fa-reorder", label: "Order Management", href: "orders" },
     { icon: "fa-box", label: "Product Management", href: "products" },
+    { icon: "fa-tags", label: "Category Management", href: "categories" },
     { icon: "fa-user", label: "Customer List", href: "customers" },
     { icon: "fa-adjust", label: "Blog Posts", href: "blog" },
-    { icon: "fa-chart-bar", label: "Analytics", href: "analytics" },
     {
       icon: "fa-shopping-bag",
       label: "Inventory Management",

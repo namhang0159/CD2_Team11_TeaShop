@@ -49,6 +49,14 @@ export default function Page() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 p-6 space-y-6">
+      <div className="flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <h1 className="text-3xl font-bold">Đơn hàng</h1>
+          <p className="text-gray-500 text-sm mt-1">
+            Quản lý thông tin đơn hàng
+          </p>
+        </div>
+      </div>
       <OrdersFilter
         search={search}
         setSearch={setSearch}

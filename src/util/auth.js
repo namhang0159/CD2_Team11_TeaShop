@@ -11,3 +11,13 @@ const FetchMe = async () => {
   return axiosClient.get(URL);
 };
 export { Login, FetchMe };
+
+export const uploadAPI = async (file) => {
+  const formData = new FormData();
+  formData.append("image", file);
+  return axiosClient.post("/api/admin/upload", formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+};

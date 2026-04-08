@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export default function ProductPage() {
   return (
-    <div className="p-8 flex flex-col gap-6 bg-green-50">
+    <div className="p-8 flex flex-col gap-6 ">
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div>
           <h1 className="text-3xl font-bold">Danh sách sản phẩm</h1>

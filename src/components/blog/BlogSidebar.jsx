@@ -1,304 +1,156 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { uploadAPI } from "@/util/auth";
+import { CreateBlogCategoryAPI } from "@/util/blog";
+import { useState, useCallback, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
 
-export default function BlogSidebar() {
-
+export default function BlogSidebar({ form, onChange, categories }) {
   const [image, setImage] = useState(null);
+  const [showmodal, setShowModal] = useState(false);
+  const [categoryName, setCategoryName] = useState("");
+  const onDrop = useCallback(
+    async (files) => {
+      const file = files[0];
+      if (!file) return;
+      console.log("Selected file:", file);
+      try {
+        const res = await uploadAPI(file);
+        console.log("Upload response:", res);
+        const data = res.data;
 
-  const [tags, setTags] = useState([]);
-  const [tagInput, setTagInput] = useState("");
+        // URL thật từ server
+        setImage(data.url);
+        onChange("thumbnail", data.url);
+      } catch (err) {
+        console.error(err);
+        alert("Upload ảnh thất bại");
+      }
+    },
+    [onChange],
+  );
 
-  const [status, setStatus] = useState("Chờ duyệt");
-  const [time, setTime] = useState("Ngay lập tức");
+  const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
-
-
-  // ================= upload =================
-
-  const onDrop = useCallback((files) => {
-
-    const file = files[0];
-
-    if (file) {
-
-      setImage(URL.createObjectURL(file));
-
+  useEffect(() => {
+    return () => {
+      if (image) URL.revokeObjectURL(image);
+    };
+  }, [image]);
+  const handle = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await CreateBlogCategoryAPI(categoryName);
+      alert("Tạo danh mục thành công");
+      setShowModal(false);
+      setCategoryName("");
+    } catch (err) {
+      console.error(err);
+      alert("Tạo danh mục thất bại");
     }
-
-  }, []);
-
-  const { getRootProps, getInputProps } =
-    useDropzone({ onDrop });
-
-
-
-  // ================= tag =================
-
-  const addTags = (text) => {
-
-    if (!text) return;
-
-    const newTags = text
-      .split(",")
-      .map((t) => t.trim())
-      .filter((t) => t !== "");
-
-    const unique = newTags.filter(
-      (t) => !tags.includes(t)
-    );
-
-    setTags([...tags, ...unique]);
-
-    setTagInput("");
-
   };
-
-
-
-  const removeTag = (index) => {
-
-    setTags(
-      tags.filter((_, i) => i !== index)
-    );
-
-  };
-
-
-
   return (
-
     <div className="w-80 flex flex-col gap-6">
-
-
-      {/* ================= IMAGE ================= */}
-
       <div className="bg-white rounded-xl p-4 shadow">
-
-        <p className="font-bold mb-3">
-          Hình ảnh nổi bật
-        </p>
+        <p className="font-bold mb-3">Hình ảnh nổi bật</p>
 
         <div
           {...getRootProps()}
-          className="
-            h-40
-            border-2
-            border-dashed
-            border-green-300
-            flex
-            items-center
-            justify-center
-            cursor-pointer
-          "
+          className="h-40 border-2 border-dashed border-green-300 flex items-center justify-center cursor-pointer"
         >
-
           <input {...getInputProps()} />
 
           {image ? (
-
-            <img
-              src={image}
-              className="h-full object-cover"
-            />
-
+            <img src={image} className="h-full w-full object-cover rounded" />
           ) : (
-
-            <p className="text-gray-400">
-              Kéo thả hoặc click để tải lên
-            </p>
-
+            <p className="text-gray-400">Kéo thả hoặc click để tải lên</p>
           )}
-
         </div>
-
       </div>
 
-
-
-      {/* ================= CATEGORY ================= */}
-
       <div className="bg-white rounded-xl p-4 shadow">
-
-        <p className="font-bold mb-3">
-          Chuyên mục
-        </p>
-
-        <label className="block">
-          <input type="checkbox" /> Kiến thức trà
-        </label>
-
-        <label className="block">
-          <input type="checkbox" /> Nghệ thuật pha trà
-        </label>
-
-        <label className="block">
-          <input type="checkbox" /> Tin tức
-        </label>
-
-        <label className="block">
-          <input type="checkbox" /> Văn hóa trà
-        </label>
-
-        <label className="block">
-          <input type="checkbox" /> Sản phẩm
-        </label>
-
+        <p className="font-bold mb-3">Slug</p>
+        <input
+          value={form.slug}
+          onChange={(e) => onChange("slug", e.target.value)}
+          placeholder="slug-bai-viet"
+          className="w-full border p-2 rounded"
+        />
       </div>
 
-
-
-      {/* ================= TAG ================= */}
+      <div className="bg-white rounded-xl p-4 shadow">
+        <p className="font-bold mb-3">Tác giả</p>
+        <input
+          value={form.author_name}
+          onChange={(e) => onChange("author_name", e.target.value)}
+          placeholder="Tên tác giả"
+          className="w-full border p-2 rounded"
+        />
+      </div>
 
       <div className="bg-white rounded-xl p-4 shadow">
+        <p className="font-bold mb-3">Danh mục</p>
 
-        <p className="font-bold mb-2">
-          Thẻ (Tags)
-        </p>
-
-
-        {/* tag list */}
-
-        <div className="flex flex-wrap gap-2 mb-2">
-
-          {tags.map((t, i) => (
-
-            <span
-              key={i}
-              className="
-                flex
-                items-center
-                gap-1
-                px-2
-                py-1
-                bg-green-100
-                text-green-700
-                rounded
-                text-sm
-              "
-            >
-
-              {t}
-
-              <button
-                onClick={() => removeTag(i)}
-                className="text-xs"
-              >
-                ✕
-              </button>
-
-            </span>
-
+        <select
+          value={form.category_id}
+          onChange={(e) => onChange("category_id", e.target.value)}
+          className="w-full border p-2 rounded"
+        >
+          <option value="">Chọn danh mục</option>
+          {categories?.map((item) => (
+            <option key={item.id} value={item.id}>
+              {item.name}
+            </option>
           ))}
-
-        </div>
-
-
-        {/* input */}
-
-        <div className="flex gap-2">
-
-          <input
-            value={tagInput}
-            onChange={(e) =>
-              setTagInput(e.target.value)
-            }
-
-            onKeyDown={(e) => {
-
-              if (e.key === "Enter") {
-
-                e.preventDefault();
-                addTags(tagInput);
-
-              }
-
-            }}
-
-            placeholder="thêm thẻ tag"
-            className="flex-1 border p-2 rounded"
-
-          />
-
-          <button
-            onClick={() => addTags(tagInput)}
-            className="
-              px-3
-              bg-green-600
-              text-white
-              rounded
-            "
-          >
-            +
-          </button>
-
-        </div>
- <p className="text-xs text-gray-500 mt-1">
-    Tách các thẻ bằng dấu phẩy
-  </p>
-
+        </select>
+        <p
+          className="text-blue-500 cursor-pointer hover:underline"
+          onClick={() => setShowModal(true)}
+        >
+          + Thêm danh mục
+        </p>
       </div>
-
-
-
-      {/* ================= PUBLISH ================= */}
 
       <div className="bg-white rounded-xl p-4 shadow">
-
-        <p className="font-bold mb-3">
-          Thiết lập xuất bản
-        </p>
-
+        <p className="font-bold mb-3">Thiết lập xuất bản</p>
 
         <div className="flex justify-between text-sm mb-2">
-
           <span>Trạng thái</span>
-
-          <select className="text-amber-400 font-bold text-lg "
-            value={status}
-            onChange={(e) =>
-              setStatus(e.target.value)
-            }
-          >
-            <option>Chờ duyệt</option>
-            <option>Bản nháp</option>
-            <option>Đã đăng</option>
-          </select>
-
-        </div>
-
-
-        <div className="flex justify-between text-sm mb-2">
-
-          <span>Thời gian</span>
-
           <select
-            value={time}
-            onChange={(e) =>
-              setTime(e.target.value)
-            }
+            value={form.status}
+            onChange={(e) => onChange("status", e.target.value)}
           >
-            <option>Ngay lập tức</option>
-            <option>Lên lịch</option>
+            <option value="draft">Bản nháp</option>
+            <option value="published">Đã đăng</option>
           </select>
-
         </div>
-
-
-        <div className="flex justify-between text-sm">
-
-          <span>Hiển thị</span>
-
-          <span>Công khai</span>
-
-        </div>
-
       </div>
+      {showmodal && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center">
+          <div className="bg-white rounded p-6 w-96">
+            <h3 className="font-bold mb-4">Thêm danh mục</h3>
 
-
+            <input
+              value={categoryName}
+              onChange={(e) => setCategoryName(e.target.value)}
+              placeholder="Tên danh mục"
+              className="w-full border p-2 rounded mb-4"
+            />
+            <button
+              className="bg-green-600 text-white px-4 py-2 rounded"
+              onClick={handle}
+            >
+              Thêm
+            </button>
+            <button
+              className="ml-2 px-4 py-2 rounded border"
+              onClick={() => setShowModal(false)}
+            >
+              Hủy
+            </button>
+          </div>
+        </div>
+      )}
     </div>
-
   );
-
 }

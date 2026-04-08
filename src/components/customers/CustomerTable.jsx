@@ -1,7 +1,7 @@
 "use client";
 
-import { users } from "@/data/user";
-import { useState } from "react";
+import { GetCustomerListAPI } from "@/util/customer";
+import { useEffect, useState } from "react";
 
 function CustomerRow({ user }) {
   const roleColor = {
@@ -61,7 +61,19 @@ function CustomerRow({ user }) {
 
 export default function CustomerTable() {
   const [search, setSearch] = useState("");
+  const [users, setUsers] = useState([]);
 
+  useEffect(() => {
+    const fetchCustomers = async () => {
+      try {
+        const res = await GetCustomerListAPI();
+        setUsers(res.data || []);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    fetchCustomers();
+  }, []);
   const filtered = users.filter(
     (u) =>
       u.full_name.toLowerCase().includes(search.toLowerCase()) ||
