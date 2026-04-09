@@ -15,30 +15,34 @@
 // export default nextConfig;
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: undefined,
   images: {
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "picsum.photos",
-      },
-      {
-        protocol: "https",
-        hostname: "lh3.googleusercontent.com",
-      },
-      {
-        protocol: "https",
-        hostname: "images.unsplash.com",
-      },
-      {
-        protocol: "https",
-        hostname: "example.com",
-      },
-      {
-        protocol: "https",
-        hostname: "thienantea.io.vn",
-      },
-    ],
+    unoptimized: true,
   },
+  // images: {
+  //   remotePatterns: [
+  //     {
+  //       protocol: "https",
+  //       hostname: "picsum.photos",
+  //     },
+  //     {
+  //       protocol: "https",
+  //       hostname: "lh3.googleusercontent.com",
+  //     },
+  //     {
+  //       protocol: "https",
+  //       hostname: "images.unsplash.com",
+  //     },
+  //     {
+  //       protocol: "https",
+  //       hostname: "example.com",
+  //     },
+  //     {
+  //       protocol: "https",
+  //       hostname: "thienantea.io.vn",
+  //     },
+  //   ],
+  // },
 };
 
 export default nextConfig;
