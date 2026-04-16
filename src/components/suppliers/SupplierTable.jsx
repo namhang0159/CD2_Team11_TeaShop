@@ -1,7 +1,17 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { suppliers } from "@/data/suppliers";
+import { DeleteSupplier, GetSuppliers } from "@/util/suppliers";
+
+const handleDelete = async (id) => {
+  if (confirm("Bạn có chắc muốn xóa nhà cung cấp này?")) {
+    // TODO: Call API to delete supplier
+    await DeleteSupplier(id);
+    alert("Xóa nhà cung cấp thành công!");
+    window.location.reload(); // Reload page to refresh supplier list
+  }
+};
 
 function SupplierRow({ supplier }) {
   return (
@@ -27,15 +37,10 @@ function SupplierRow({ supplier }) {
 
       {/* Actions */}
       <td className="px-6 py-4 flex justify-center gap-2">
-        <button className="p-1.5 rounded-lg hover:bg-green-600 hover:text-white text-gray-400">
-          <i className="fa fa-eye"></i>
-        </button>
-
-        <button className="p-1.5 rounded-lg hover:bg-blue-500 hover:text-white text-gray-400">
-          <i className="fa fa-edit"></i>
-        </button>
-
-        <button className="p-1.5 rounded-lg hover:bg-red-500 hover:text-white text-gray-400">
+        <button
+          onClick={() => handleDelete(supplier.id)}
+          className="p-1.5 rounded-lg hover:bg-red-500 hover:text-white text-gray-400"
+        >
           <i className="fa fa-trash"></i>
         </button>
       </td>
@@ -45,13 +50,20 @@ function SupplierRow({ supplier }) {
 
 export default function SupplierTable() {
   const [searchTerm, setSearchTerm] = useState("");
+  const [suppliersList, setSuppliersList] = useState([]);
 
-  const filteredSuppliers = suppliers.filter(
-    (s) =>
-      s.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      (s.phone && s.phone.includes(searchTerm)),
-  );
-
+  useEffect(() => {
+    const fetchSuppliers = async () => {
+      try {
+        const response = await GetSuppliers();
+        console.log("Suppliers fetched:", response.data);
+        setSuppliersList(response.data);
+      } catch (error) {
+        console.error("Error fetching suppliers:", error);
+      }
+    };
+    fetchSuppliers();
+  }, []);
   return (
     <div className="bg-white rounded-xl shadow overflow-hidden p-4 flex flex-col gap-4">
       {/* Filters */}
@@ -85,10 +97,8 @@ export default function SupplierTable() {
           </thead>
 
           <tbody className="divide-y divide-gray-200 text-sm">
-            {filteredSuppliers.length > 0 ? (
-              filteredSuppliers.map((s) => (
-                <SupplierRow key={s.id} supplier={s} />
-              ))
+            {suppliersList.length > 0 ? (
+              suppliersList.map((s) => <SupplierRow key={s.id} supplier={s} />)
             ) : (
               <tr>
                 <td

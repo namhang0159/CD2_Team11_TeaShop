@@ -3,7 +3,9 @@ import { useRouter } from "next/navigation";
 
 export default function InventoryTable({ data = [] }) {
   const router = useRouter();
-
+  const formatDate = (dateStr) => {
+    return new Date(dateStr).toLocaleDateString("vi-VN");
+  };
   const statusMap = {
     Received: "good",
     Pending: "warning",
@@ -59,7 +61,9 @@ export default function InventoryTable({ data = [] }) {
                     {item.importCode}
                   </td>
 
-                  <td className="text-gray-600">{item.importDate}</td>
+                  <td className="text-gray-600">
+                    {formatDate(item.importDate)}
+                  </td>
 
                   <td className="text-gray-700">{item.supplierName}</td>
 
@@ -87,7 +91,7 @@ export default function InventoryTable({ data = [] }) {
 
                   <td className="text-right px-6">
                     <button
-                      onClick={() => router.push(`/inventory/${item.id}`)}
+                      onClick={() => router.push(`/import/${item.id}`)}
                       className="text-blue-600 hover:text-blue-800 font-medium"
                     >
                       Chi tiết →

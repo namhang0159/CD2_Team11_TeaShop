@@ -14,18 +14,20 @@ export default function SupplierCard({ data }) {
         <div className="grid grid-cols-2 gap-4">
           <div>
             <p className="text-xs text-gray-500 uppercase">Liên hệ</p>
-            <p className="text-sm font-medium">{data.phone}</p>
+            <p className="text-sm font-medium">
+              {data.supplierPhone || "N/A"}
+            </p>{" "}
           </div>
 
           <div>
             <p className="text-xs text-gray-500 uppercase">Mã NCC</p>
-            <p className="text-sm font-medium">NCC-{data.supplierId}</p>
+            <p className="text-sm font-medium">NCC-{data.supplierId || ""}</p>
           </div>
         </div>
 
         <div>
           <p className="text-xs text-gray-500 uppercase">Địa chỉ</p>
-          <p className="text-sm">{data.address}</p>
+          <p className="text-sm">{data.supplierAddress || "N/A"}</p>
         </div>
       </div>
     </div>
@@ -40,12 +42,14 @@ const ImportInfoCard = ({ data }) => {
         <div className="grid grid-cols-2 gap-4">
           <div>
             <p className="text-xs text-gray-500 uppercase">Ngày nhập</p>
-            <p className="font-semibold">{data.importDate.split(" ")[0]}</p>
+            <p className="font-semibold">
+              {data?.importDate ? data.importDate.split(" ")[0] : ""}
+            </p>
           </div>
 
           <div>
             <p className="text-xs text-gray-500 uppercase">Mã phiếu</p>
-            <p className="font-semibold">{data.importCode}</p>
+            <p className="font-semibold">{data?.importCode || ""}</p>
           </div>
         </div>
 

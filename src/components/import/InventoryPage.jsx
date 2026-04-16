@@ -9,6 +9,7 @@ import InventoryFilter from "./InventoryFilter";
 import { getInventory } from "@/util/api";
 import useDebounce from "@/hooks/useDebounce.";
 import Link from "next/link";
+import { GetImportInventoryListAPI } from "@/util/import";
 
 export default function InventoryPage() {
   const [rawData, setRawData] = useState([]);
@@ -26,30 +27,28 @@ export default function InventoryPage() {
 
   const [minProducts, setMinProducts] = useState("");
   const [maxProducts, setMaxProducts] = useState("");
+
   // FETCH DATA
   const fetchData = async () => {
-    const res = await getInventory();
-
+    const res = await GetImportInventoryListAPI();
+    console.log("res", res);
     const formatted = res.data.map((item) => {
-      const totalProducts = item.items.length;
-
-      const totalStock = item.items.reduce(
-        (sum, i) => sum + i.stockAfterImport,
-        0,
-      );
-
       return {
         id: item.id,
-        importCode: item.importCode,
-        importDate: item.importDate,
-        supplierName: item.supplierName,
-        totalAmount: item.totalAmount,
+
+        importCode: `IMP-${item.id}`,
+
+        importDate: item.import_date,
+
+        supplierName: item.supplier_name,
+
+        totalAmount: Number(item.total_amount || 0),
+
         status: item.status,
 
-        items: item.items,
+        totalProducts: item.total_items || 0,
 
-        totalProducts,
-        totalStock,
+        totalStock: 0, // backend chưa có
       };
     });
 
@@ -114,7 +113,7 @@ export default function InventoryPage() {
         </div>
 
         <Link
-          href="/inventory/create"
+          href="/import/create"
           className="bg-green-600 text-white px-5 py-2.5 rounded-lg font-bold flex gap-2 items-center"
         >
           <i className="fa fa-plus"></i>
@@ -122,7 +121,7 @@ export default function InventoryPage() {
         </Link>
       </div>
 
-      {/* SUMMARY */}
+      {/* SUMMARY
       <div className="grid grid-cols-4 gap-6">
         <SummaryCard
           icon="box"
@@ -148,7 +147,7 @@ export default function InventoryPage() {
           value="$45,200"
           color="bg-blue-100 text-blue-600"
         />
-      </div>
+      </div> */}
 
       {/* FILTER */}
       <InventoryFilter

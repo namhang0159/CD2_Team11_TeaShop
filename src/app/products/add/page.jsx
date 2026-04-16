@@ -3,12 +3,25 @@
 import Link from "next/link";
 
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { addProductAPI } from "@/util/products";
+
+import { GetCategories } from "@/util/catgories";
 
 export default function AddProductPage() {
   const router = useRouter();
-
+  const [categoryOptions, setCategoryOptions] = useState([]);
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const res = await GetCategories();
+        setCategoryOptions(res.data);
+      } catch (err) {
+        console.error("Failed to fetch categories:", err);
+      }
+    };
+    fetchCategories();
+  }, []);
   const [form, setForm] = useState({
     category_id: 1,
     name: "",
@@ -113,7 +126,7 @@ export default function AddProductPage() {
   };
 
   return (
-    <div className="bg-green-50 min-h-screen p-8">
+    <div className=" min-h-screen p-8">
       {/* HEADER (GIỮ UI CŨ) */}
       <header className="flex flex-wrap justify-between items-end gap-4 mb-8">
         <div className="max-w-2xl">
@@ -176,9 +189,11 @@ export default function AddProductPage() {
                   onChange={handleChange}
                   className="w-full rounded-lg border border-gray-300 bg-green-50 p-3"
                 >
-                  <option value={1}>Oolong</option>
-                  <option value={2}>Green</option>
-                  <option value={3}>Black</option>
+                  {categoryOptions.map((cat) => (
+                    <option key={cat.id} value={cat.id}>
+                      {cat.name}
+                    </option>
+                  ))}
                 </select>
               </div>
 

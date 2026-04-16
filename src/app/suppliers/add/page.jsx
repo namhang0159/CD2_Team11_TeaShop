@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { AddSupplier } from "@/util/suppliers";
 
 export default function AddSupplierPage() {
   const router = useRouter();
@@ -19,15 +20,25 @@ export default function AddSupplierPage() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    // Validate form data
+    if (!form.name.trim()) {
+      alert("Tên nhà cung cấp là bắt buộc.");
+      return;
+    }
+    try {
+      console.log("DATA:", form);
+      await AddSupplier(form);
+      alert("Thêm nhà cung cấp thành công!");
 
+      router.push("/suppliers");
+    } catch (validationError) {
+      console.error("Validation error:", validationError);
+      alert("Có lỗi xảy ra khi xác thực dữ liệu. Vui lòng thử lại.");
+      return;
+    }
     // TODO: call API backend
-    console.log("DATA:", form);
-
-    alert("Thêm nhà cung cấp thành công!");
-
-    router.push("/suppliers");
   };
 
   return (
