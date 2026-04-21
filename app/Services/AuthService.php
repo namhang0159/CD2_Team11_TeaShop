@@ -39,6 +39,19 @@ class AuthService
 
         return ['user' => $user, 'token' => $token];
     }
+    public function createAccountForAdmin(array $data)
+    {
+        $admin = User::create([
+            'full_name' => $data['full_name'],
+            'email' => $data['email'], // Lấy email từ request
+            'phone_number' => $data['phone_number'] ?? null,
+            'password_hash' => Hash::make($data['password']),
+            'role' => 'admin',
+            'created_at' => now()
+        ]);
+
+        return $admin;
+    }
     public function loginAdmin(array $data)
     {
         // 1. Tìm admin theo Email

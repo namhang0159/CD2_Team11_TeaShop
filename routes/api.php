@@ -10,6 +10,7 @@ use App\Http\Controllers\AddressController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\Admin\UploadController as AdminUploadController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
+use App\Http\Controllers\Admin\InventoryController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\CustomerController;
@@ -84,5 +85,17 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::delete('/post-categories/{id}', [PostCategoryController::class, 'destroy']); 
         Route::get('customers', [CustomerController::class, 'index']); // Xem danh sách khách hàng
         Route::get('customers/{id}', [CustomerController::class, 'show']); // Xem chi tiết khách hàng
+        Route::post('/inventory/import', [InventoryController::class, 'import']);
+        Route::post('/inventory/import-order', [InventoryController::class, 'importwithOrders']);
+        Route::get('/inventory', [InventoryController::class, 'index']);
+        Route::get('/inventory/imports', [InventoryController::class, 'imports']);
+        Route::get('/inventory/imports/{id}', [InventoryController::class, 'importDetail']);
+        Route::get('/suppliers', [\App\Http\Controllers\Admin\SupplierController::class, 'index']);
+        Route::post('/suppliers', [\App\Http\Controllers\Admin\SupplierController::class, 'store']);
+        Route::delete('/suppliers/{id}', [\App\Http\Controllers\Admin\SupplierController::class, 'destroy']);
+        
+        
+        
+        Route::post('/create-account', [AuthController::class, 'createAccountForAdmin']); // API tạo tài khoản admin
     });
 });

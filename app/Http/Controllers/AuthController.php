@@ -50,6 +50,17 @@ class AuthController extends Controller
             ]
         ]);
     }
+    public function createAccountForAdmin(RegisterRequest $request): JsonResponse
+    {
+        $admin = $this->authService->createAccountForAdmin($request->validated());
+
+        return response()->json([
+            'message' => 'Tạo tài khoản admin thành công',
+            'data' => [
+                'admin' => new UserResource($admin),
+            ]
+        ], 201);
+    }
 
     // public function logout(): JsonResponse
     // {

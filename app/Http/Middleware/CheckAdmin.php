@@ -14,7 +14,7 @@ class CheckAdmin
         $user = $request->user();
 
         // Kiểm tra: Phải đăng nhập rồi, và role bắt buộc phải là 'admin'
-        if (!$user || !$user->isAdmin()) {
+        if (!$user || method_exists($user, 'isAdmin') === false || !$user->isAdmin()) {
             return response()->json([
                 'message' => 'Lỗi 403: Bạn không có quyền truy cập vào chức năng của Admin!'
             ], 403); // 403 Forbidden

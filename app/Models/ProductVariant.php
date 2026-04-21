@@ -26,4 +26,15 @@ class ProductVariant extends Model
             ->where('expiry_date', '>', now())
             ->sum('stock_quantity');
     }
+    public function getCalculatedStockAttribute()
+    {
+        return $this->batches()
+            ->where(function ($q) {
+                $q->whereNull('expiry_date') 
+                ->orWhere('expiry_date', '>', now()); 
+            })
+            ->sum('stock_quantity');
+    }
+
+    protected $appends = ['stock'];
 }
