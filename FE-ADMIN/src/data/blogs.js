@@ -1,0 +1,33 @@
+export const blogs = [
+  {
+    id: 1,
+    title: "Nghệ thuật thưởng thức Trà Thái Nguyên chuẩn vị",
+    category: "Văn hóa trà",
+    author: "Minh Anh",
+    date: "2023-10-12",
+    status: "published",
+    views: 1200,
+    image: "/tea1.jpg",
+  },
+  {
+    id: 2,
+    title: "Công dụng bất ngờ của trà xanh",
+    category: "Kiến thức",
+    author: "Trần Lê",
+    date: "2023-10-08",
+    status: "published",
+    views: 900,
+    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuCyWjLMQ3HS94yo3TtSRWt8ovaNPO-kLEa_620f-40H3N5GrQnuxCoVIhUTFUyn8MjPrqTiSB6CmHjZpXKIw8B-6NH7chWNc6nW5wg0zP5MjJBBAJ-89QtCh2JrUCUOCvttL8ge_SKfKFygRT3CTeWVHNLnCe6lE1z5btfLDpOIo_tfPKkkQ3n2NgwILNr1eqOXlspHYLHa9e5wNWMTmJHXkFCm-7e2BOXPzzvBLHHpmmo9R4Oo-t7DCMyrJ4_BplFvsRWiVQrCqQk",
+  },
+  {
+    id: 3,
+    title: "Quy trình ướp trà sen",
+    category: "Sản phẩm",
+    author: "Hoàng Nam",
+    date: "2023-10-05",
+    status: "draft",
+    views: 300,
+    image: "/tea3.jpg",
+  },
+];
+

@@ -1,0 +1,179 @@
+// src/utils/fakeApi.js
+export async function getStats() {
+  return [
+    {
+      title: "Tổng doanh thu",
+      value: "254.8M ₫",
+      icon: "fa-paypal",
+      change: "+12.5%",
+      trend: "up",
+    },
+    {
+      title: "Tổng đơn hàng",
+      value: "1,245",
+      icon: "fa-shopping-cart",
+      change: "+8.2%",
+      trend: "up",
+    },
+    {
+      title: "Khách hàng mới",
+      value: "312",
+      icon: "fa-user-plus",
+      change: "+15.3%",
+      trend: "up",
+    },
+    {
+      title: "Sản phẩm hoạt động",
+      value: "45",
+      icon: "fa-box-open",
+      change: "Ổn định",
+      trend: "stable",
+    },
+  ];
+}
+
+export async function getTopProducts() {
+  return [
+    {
+      name: "Trà Shan Tuyết",
+      sold: 245,
+      price: "1.2M ₫",
+      img: "https://via.placeholder.com/40",
+    },
+    {
+      name: "Trà Ô Long",
+      sold: 182,
+      price: "850k ₫",
+      img: "https://via.placeholder.com/40",
+    },
+    {
+      name: "Bộ Ấm Trà",
+      sold: 96,
+      price: "2.5M ₫",
+      img: "https://via.placeholder.com/40",
+    },
+    {
+      name: "Trà Xanh",
+      sold: 154,
+      price: "450k ₫",
+      img: "https://via.placeholder.com/40",
+    },
+  ];
+}
+
+import { products } from "@/data/products";
+
+export const getProducts = async () => {
+  return new Promise((res) => {
+    setTimeout(() => {
+      res(products);
+    }, 300);
+  });
+};
+
+export const getProductById = async (id) => {
+  return new Promise((res) => {
+    setTimeout(() => {
+      const product = products.find((p) => p.id === Number(id));
+      res(product);
+    }, 300);
+  });
+};
+export async function getRecentOrders() {
+  return [
+    {
+      id: "#DH-00241",
+      customer: "Trần Văn Tú",
+      product: "Trà Shan Tuyết (x2)",
+      date: "12/10/2023",
+      price: "2.4M ₫",
+      status: "ĐÃ HOÀN THÀNH",
+    },
+    {
+      id: "#DH-00240",
+      customer: "Lê Thị Mai",
+      product: "Bộ Ấm Trà (x1)",
+      date: "12/10/2023",
+      price: "2.5M ₫",
+      status: "ĐANG XỬ LÝ",
+    },
+    {
+      id: "#DH-00239",
+      customer: "Nguyễn Hoàng Nam",
+      product: "Trà Ô Long (x5)",
+      date: "11/10/2023",
+      price: "4.2M ₫",
+      status: "ĐANG CHỜ",
+    },
+    {
+      id: "#DH-00238",
+      customer: "Phạm Hải Yến",
+      product: "Trà Xanh (x1)",
+      date: "11/10/2023",
+      price: "450k ₫",
+      status: "ĐÃ HỦY",
+    },
+  ];
+}
+import { inventoryData } from "@/data/import";
+import { orders } from "@/data/orders";
+
+export const getOrders = async () => {
+  return new Promise((res) => {
+    setTimeout(() => {
+      res(orders);
+    }, 300);
+  });
+};
+
+export async function getInventory(params = {}) {
+  await new Promise((res) => setTimeout(res, 300));
+
+  let data = [...inventoryData];
+
+  // search
+  if (params.keyword) {
+    const keyword = params.keyword.toLowerCase();
+    data = data.filter(
+      (item) =>
+        item.name.toLowerCase().includes(keyword) ||
+        item.sku.toLowerCase().includes(keyword),
+    );
+  }
+
+  // category
+  if (params.category && params.category !== "all") {
+    data = data.filter((item) => item.category === params.category);
+  }
+
+  // status
+  if (params.status && params.status !== "all") {
+    data = data.filter((item) => item.status === params.status);
+  }
+
+  return {
+    data,
+    total: data.length,
+  };
+}
+
+export const getInventoryDetailById = (id) => {
+  return inventoryData.find((item) => item.id === Number(id));
+};
+
+import { blogs } from "@/data/blogs";
+
+export const getBlogs = async () => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(blogs);
+    }, 200);
+  });
+};
+
+import { blogCategories } from "@/data/blog-categories";
+import { blogStatus } from "@/data/blog-status";
+
+export const getCategories = async () => blogCategories;
+
+export const getStatus = async () => blogStatus;
