@@ -21,7 +21,7 @@ export default function CategoriesPage() {
       try {
         const res = await GetCategories();
 
-        // 🔥 sort mới nhất
+
         const sorted = res.data.sort(
           (a, b) => new Date(b.created_at) - new Date(a.created_at),
         );
@@ -34,7 +34,7 @@ export default function CategoriesPage() {
     fetchCategories();
   }, []);
 
-  // ✅ Input
+
   const handleChange = (e) => {
     setForm({
       ...form,
@@ -42,7 +42,7 @@ export default function CategoriesPage() {
     });
   };
 
-  // ✅ Add
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -63,7 +63,6 @@ export default function CategoriesPage() {
     }
   };
 
-  // ✅ Delete
   const handleDelete = async (id) => {
     if (!confirm("Xóa thật không?")) return;
 
@@ -77,12 +76,11 @@ export default function CategoriesPage() {
     }
   };
 
-  // ✅ Filter
+
   const filtered = categories.filter((c) =>
     c.name.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
-  // ✅ Image
   const getImage = (url) => {
     if (!url) return "/no-image.png";
     if (!url.startsWith("http")) {
@@ -91,7 +89,7 @@ export default function CategoriesPage() {
     return url;
   };
 
-  // ✅ Format date
+
   const formatDate = (date) => {
     return new Date(date).toLocaleDateString("vi-VN");
   };
