@@ -14,6 +14,7 @@ export default function Sidebar() {
     { icon: "fa-tags", label: "Category Management", href: "categories" },
     { icon: "fa-user", label: "Customer List", href: "customers" },
     { icon: "fa-adjust", label: "Blog Posts", href: "blog" },
+    { icon: "fa-box", label: "Blog Categories", href: "categoryblog" },
     { icon: "fa-box-open", label: "Import Management", href: "import" },
     { icon: "fa-truck", label: "Suppliers", href: "suppliers" },
     { icon: "fa-cog", label: "Settings", href: "settings" },
